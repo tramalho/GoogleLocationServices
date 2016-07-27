@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="br.com.tramalho.googlelocationservices.MainActivity">
+    tools:context="br.com.tramalho.googlelocationservices.MainActivity"
+    android:orientation="vertical">
 
-</RelativeLayout>
+    <Button
+        android:id="@+id/button_location_changes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/location_changes"
+        android:onClick="clickButton"/>
+
+    <Button
+        android:id="@+id/button_unique_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/unique_location"
+        android:onClick="clickButton"/>
+
+</LinearLayout>

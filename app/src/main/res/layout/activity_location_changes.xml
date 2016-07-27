@@ -10,7 +10,7 @@
     tools:context=".LocationChangesActivity">
 
     <TextView
-        android:id="@+id/txt_output"
+        android:id="@+id/txt_output_location_changes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name" />

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">GoogleLocationServices</string>
+    <string name="location_changes">Location Changes</string>
+    <string name="unique_location">unique location</string>
+    <string name="label_latitude">Latitude: %1$s</string>
+    <string name="label_longitude">Longitude: %1$s</string>
 </resources>

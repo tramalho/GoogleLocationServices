@@ -31,14 +31,14 @@ public class LocationChangesActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        createGoogleAPIClient();
+        setContentView(R.layout.activity_location_changes);
         loadUI();
-
+        createGoogleAPIClient();
     }
 
     private void loadUI() {
-        txtOutput = (TextView) findViewById(R.id.txt_output);
+        setTitle(R.string.location_changes);
+        txtOutput = (TextView) findViewById(R.id.txt_output_location_changes);
     }
 
     private void createGoogleAPIClient() {

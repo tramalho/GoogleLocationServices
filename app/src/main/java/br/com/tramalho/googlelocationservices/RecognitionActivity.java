@@ -63,12 +63,14 @@ public class RecognitionActivity extends AbstractLocationActivity implements Res
     }
 
     private void updateUI(ArrayList<DetectedActivity> parcelableArrayListExtra) {
+
         for (DetectedActivity detectedActivity : parcelableArrayListExtra) {
 
             int confidence = detectedActivity.getConfidence();
             String friendlyType = DetectedActivity.zzsu(detectedActivity.getType());
 
-            mTxtDetectedActivities.append(friendlyType + "-" + confidence +"%");
+            mTxtDetectedActivities.append("\n");
+            mTxtDetectedActivities.append(friendlyType + "-" + confidence +" %");
         }
     }
 
@@ -81,6 +83,7 @@ public class RecognitionActivity extends AbstractLocationActivity implements Res
     public void removeActivityUpdatesButtonHandler(View view) {
         ActivityRecognition.ActivityRecognitionApi.removeActivityUpdates(mGoogleApiClient,
                 getActivityDetectionPendingIntent()).setResultCallback(this);
+        mTxtDetectedActivities.setText(getString(R.string.detected_activities_title));
     }
 
     @Override
@@ -103,7 +106,7 @@ public class RecognitionActivity extends AbstractLocationActivity implements Res
 
     @Override
     public void onResult(@NonNull Status status) {
-
+        showLog(status.toString(), "message: "+status.getStatusMessage());
     }
 
     class ActivityDetectionBroadcast extends BroadcastReceiver{

@@ -25,6 +25,10 @@ public abstract class AbstractLocationActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
+        connect();
+    }
+
+    private void connect() {
         if(mGoogleApiClient != null && !mGoogleApiClient.isConnected()) {
             mGoogleApiClient.connect();
         }
@@ -51,6 +55,7 @@ public abstract class AbstractLocationActivity extends AppCompatActivity
     @Override
     public void onConnectionSuspended(int i) {
         showLog("onConnectionSuspended", "status: "+i);
+        connect();
     }
 
     @Override

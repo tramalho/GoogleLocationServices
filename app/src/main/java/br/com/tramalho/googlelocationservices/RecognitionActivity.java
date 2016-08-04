@@ -1,22 +1,27 @@
 package br.com.tramalho.googlelocationservices;
 
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.common.api.Api;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.ActivityRecognition;
 import com.google.android.gms.location.DetectedActivity;
 
 import java.util.ArrayList;
 
-public class RecognitionActivity extends AbstractLocationActivity {
+
+public class RecognitionActivity extends AbstractLocationActivity implements ResultCallback<Status> {
 
     private TextView mTxtDetectedActivities;
     private ActivityDetectionBroadcast mBroadcastReceiver;
@@ -38,8 +43,8 @@ public class RecognitionActivity extends AbstractLocationActivity {
 
     @Override
     protected void onStop() {
-        super.onStop();
         configReceiver(false);
+        super.onStop();
     }
 
     private void configReceiver(boolean isRegister) {
@@ -69,9 +74,13 @@ public class RecognitionActivity extends AbstractLocationActivity {
 
 
     public void requestActivityUpdatesButtonHandler(View view) {
+        ActivityRecognition.ActivityRecognitionApi.requestActivityUpdates(mGoogleApiClient, 1000,
+                getActivityDetectionPendingIntent()).setResultCallback(this);
     }
 
     public void removeActivityUpdatesButtonHandler(View view) {
+        ActivityRecognition.ActivityRecognitionApi.removeActivityUpdates(mGoogleApiClient,
+                getActivityDetectionPendingIntent()).setResultCallback(this);
     }
 
     @Override
@@ -79,9 +88,22 @@ public class RecognitionActivity extends AbstractLocationActivity {
         showLog("onConnected");
     }
 
+    private PendingIntent getActivityDetectionPendingIntent() {
+        Intent intent = new Intent(this, DetectedActivitiesIntentService.class);
+
+        // We use FLAG_UPDATE_CURRENT so that we get the same pending intent back when calling
+        // requestActivityUpdates() and removeActivityUpdates().
+        return PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
     @Override
     protected Api<? extends Api.ApiOptions.NotRequiredOptions> getAPI() {
         return ActivityRecognition.API;
+    }
+
+    @Override
+    public void onResult(@NonNull Status status) {
+
     }
 
     class ActivityDetectionBroadcast extends BroadcastReceiver{

@@ -23,7 +23,7 @@ public abstract class Const {
     public static HashMap<String, LatLng> LANDMARKS = new HashMap<String, LatLng>();
 
     static {
-        LANDMARKS.put("CI&T", new LatLng(-23.555190, -46.660456));
+        LANDMARKS.put("CI&T", new LatLng(-23.554995, -46.6629269));
     }
 
 }

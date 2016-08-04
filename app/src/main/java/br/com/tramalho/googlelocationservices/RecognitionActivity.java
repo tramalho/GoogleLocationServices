@@ -1,10 +1,10 @@
 package br.com.tramalho.googlelocationservices;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 
-public class RecognitionActivity extends AppCompatActivity {
+public class RecognitionActivity extends AbstractLocationActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,5 +16,10 @@ public class RecognitionActivity extends AppCompatActivity {
     }
 
     public void removeActivityUpdatesButtonHandler(View view) {
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
     }
 }

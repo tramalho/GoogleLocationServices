@@ -3,15 +3,11 @@ package br.com.tramalho.googlelocationservices;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-
-import java.util.Arrays;
 
 public class LocationChangesActivity extends AbstractLocationActivity implements LocationListener {
 
@@ -47,10 +43,5 @@ public class LocationChangesActivity extends AbstractLocationActivity implements
     public void onLocationChanged(Location location) {
         showLog("onLocationChanged", location.toString());
         txtOutput.append("\n "+location.toString());
-    }
-
-    private void showLog(String message, String... addictional){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        Log.d(TAG, message +" - "+Arrays.toString(addictional));
     }
 }

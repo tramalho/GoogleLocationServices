@@ -35,7 +35,7 @@ public class UniqueLocationActivity extends AbstractLocationActivity {
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-
+        showLog("onConnected");
         Location mLastLocation = LocationServices.FusedLocationApi
                 .getLastLocation(mGoogleApiClient);
 

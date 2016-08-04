@@ -3,8 +3,10 @@ package br.com.tramalho.googlelocationservices;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.TextView;
 
@@ -26,6 +28,29 @@ public class RecognitionActivity extends AbstractLocationActivity {
         loadUI();
         mBroadcastReceiver = new ActivityDetectionBroadcast();
         createGoogleAPIClient();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        configReceiver(true);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        configReceiver(false);
+    }
+
+    private void configReceiver(boolean isRegister) {
+        IntentFilter intentFilter = new IntentFilter(Const.BROADCAST_ACTION);
+        LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(this);
+
+        broadcastManager.unregisterReceiver(mBroadcastReceiver);
+
+        if(isRegister){
+            broadcastManager.registerReceiver(mBroadcastReceiver, intentFilter);
+        }
     }
 
     private void loadUI() {
@@ -51,7 +76,7 @@ public class RecognitionActivity extends AbstractLocationActivity {
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-
+        showLog("onConnected");
     }
 
     @Override

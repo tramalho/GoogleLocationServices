@@ -4,7 +4,10 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
 
+import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingEvent;
+
+import java.util.List;
 
 /**
  * Created by tramalho on 04/08/16.
@@ -31,6 +34,29 @@ public class GeofenceTransitionIntentService extends IntentService {
                     .getErrorString(getApplicationContext(), geofencingEvent.getErrorCode());
 
             Log.e(TAG, "onHandleIntent: "+errorString);
+        } else {
+
+            int geofenceTransition = geofencingEvent.getGeofenceTransition();
+
+            if(Geofence.GEOFENCE_TRANSITION_ENTER == geofenceTransition ||
+                    Geofence.GEOFENCE_TRANSITION_EXIT == geofenceTransition){
+
+                List<Geofence> triggeringGeofences = geofencingEvent.getTriggeringGeofences();
+
+                String ids = concatGeofenceIds(triggeringGeofences);
+
+            }
         }
+    }
+
+    private String concatGeofenceIds(List<Geofence> triggeringGeofences) {
+
+        StringBuilder builder = new StringBuilder();
+
+        for (Geofence triggeringGeofence : triggeringGeofences) {
+            builder.append(triggeringGeofence.getRequestId());
+        }
+
+        return builder.toString();
     }
 }

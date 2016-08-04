@@ -17,12 +17,14 @@ import java.util.ArrayList;
 public class RecognitionActivity extends AbstractLocationActivity {
 
     private TextView mTxtDetectedActivities;
+    private ActivityDetectionBroadcast mBroadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recognition);
         loadUI();
+        mBroadcastReceiver = new ActivityDetectionBroadcast();
         createGoogleAPIClient();
     }
 
@@ -34,13 +36,9 @@ public class RecognitionActivity extends AbstractLocationActivity {
         for (DetectedActivity detectedActivity : parcelableArrayListExtra) {
 
             int confidence = detectedActivity.getConfidence();
-            int type = detectedActivity.getType();
             String friendlyType = DetectedActivity.zzsu(detectedActivity.getType());
 
-            showLog("activity: ",
-                    "confidence: "+confidence,
-                    "type: ["+type+"]",
-                    "friendly type: "+friendlyType);
+            mTxtDetectedActivities.append(friendlyType + "-" + confidence +"%");
         }
     }
 

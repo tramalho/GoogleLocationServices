@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import com.google.android.gms.common.api.Api;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.ActivityRecognition;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingRequest;
 import com.google.android.gms.location.LocationListener;
@@ -21,11 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class GeofenceActivity extends AbstractLocationActivity implements ResultCallback<Status>,
-        LocationListener{
+public class GeofenceActivity extends AbstractLocationActivity implements ResultCallback<Status>{
 
     protected List<Geofence> mGeofenceList;
-    private LocationRequest locationRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class GeofenceActivity extends AbstractLocationActivity implements Result
                     getGeofencePendingIntent()
             ).setResultCallback(this); // Result processed in onResult().
         } catch (SecurityException securityException) {
-            // Catch exception generated if the app does not use ACCESS_FINE_LOCATION permission.
+            showLog(securityException.getMessage());
         }
     }
 
@@ -73,22 +74,11 @@ public class GeofenceActivity extends AbstractLocationActivity implements Result
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         showLog("onConnected");
-
-        locationRequest = LocationRequest.create();
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(1000);
-
-        LocationServices.FusedLocationApi
-                .requestLocationUpdates(mGoogleApiClient, locationRequest, this);
     }
 
     public void onResult(Status status) {
         if (status.isSuccess()) {
-            Toast.makeText(
-                    this,
-                    "Geofences Added",
-                    Toast.LENGTH_SHORT
-            ).show();
+            showLog("Geofences Added");
         } else {
             // Get the status code for the error and log it using a user-friendly message.
             String errorMessage = GeofenceErrorMessages.getErrorString(this,
@@ -130,10 +120,5 @@ public class GeofenceActivity extends AbstractLocationActivity implements Result
         Intent intent = new Intent(this, GeofenceTransitionIntentService.class);
         // We use FLAG_UPDATE_CURRENT so that we get the same pending intent back when calling addgeoFences()
         return PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-
     }
 }

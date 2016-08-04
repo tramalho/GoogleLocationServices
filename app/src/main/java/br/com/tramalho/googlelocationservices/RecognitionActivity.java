@@ -1,5 +1,8 @@
 package br.com.tramalho.googlelocationservices;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -38,5 +41,13 @@ public class RecognitionActivity extends AbstractLocationActivity {
     @Override
     protected Api<? extends Api.ApiOptions.NotRequiredOptions> getAPI() {
         return ActivityRecognition.API;
+    }
+
+    class ActivityDetectionBroadcast extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+        }
     }
 }

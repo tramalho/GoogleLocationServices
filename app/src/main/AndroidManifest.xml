@@ -18,9 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".LocationChangesActivity" />
         <activity android:name=".UniqueLocationActivity" />
         <activity android:name=".RecognitionActivity" />
+        <activity android:name=".GeofenceActivity" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -30,7 +32,10 @@
             android:name=".DetectedActivitiesIntentService"
             android:exported="false" />
 
-        <activity android:name=".GeofenceActivity"></activity>
+        <service
+            android:name=".GeofenceTransitionIntentService"
+            android:exported="false" />
+
     </application>
 
 </manifest>

@@ -1,7 +1,10 @@
 package br.com.tramalho.googlelocationservices;
 
 import android.app.IntentService;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
 import com.google.android.gms.location.Geofence;
@@ -46,8 +49,20 @@ public class GeofenceTransitionIntentService extends IntentService {
                 String ids = concatGeofenceIds(triggeringGeofences, geofenceTransition);
 
                 Log.d(TAG, "onHandleIntent [ids]: "+ids);
+
+                sendNotification(ids);
             }
         }
+    }
+
+    private void sendNotification(String ids) {
+
+        NotificationCompat.Builder  notBuilder = new NotificationCompat.Builder(this);
+        notBuilder.setContentText(ids).setSmallIcon(R.mipmap.ic_launcher);
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(1, notBuilder.build());
+
     }
 
     private String concatGeofenceIds(List<Geofence> triggeringGeofences, int geofenceTransition) {

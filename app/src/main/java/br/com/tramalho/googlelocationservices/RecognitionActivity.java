@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import com.google.android.gms.common.api.Api;
 import com.google.android.gms.location.ActivityRecognition;
+import com.google.android.gms.location.DetectedActivity;
+
+import java.util.ArrayList;
 
 public class RecognitionActivity extends AbstractLocationActivity {
 
@@ -26,6 +29,21 @@ public class RecognitionActivity extends AbstractLocationActivity {
     private void loadUI() {
         mTxtDetectedActivities = (TextView) findViewById(R.id.detectedActivities);
     }
+
+    private void updateUI(ArrayList<DetectedActivity> parcelableArrayListExtra) {
+        for (DetectedActivity detectedActivity : parcelableArrayListExtra) {
+
+            int confidence = detectedActivity.getConfidence();
+            int type = detectedActivity.getType();
+            String friendlyType = DetectedActivity.zzsu(detectedActivity.getType());
+
+            showLog("activity: ",
+                    "confidence: "+confidence,
+                    "type: ["+type+"]",
+                    "friendly type: "+friendlyType);
+        }
+    }
+
 
     public void requestActivityUpdatesButtonHandler(View view) {
     }
@@ -48,6 +66,12 @@ public class RecognitionActivity extends AbstractLocationActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
 
+            ArrayList<DetectedActivity> parcelableArrayListExtra =
+                    intent.getParcelableArrayListExtra(Const.PROBABLE_ACTIVIES_EXTRA);
+
+            if(parcelableArrayListExtra != null) {
+                updateUI(parcelableArrayListExtra);
+            }
         }
     }
 }

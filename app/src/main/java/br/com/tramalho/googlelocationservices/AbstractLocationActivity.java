@@ -58,8 +58,12 @@ public abstract class AbstractLocationActivity extends AppCompatActivity
         showLog("onConnectionFailed", connectionResult.getErrorMessage());
     }
 
-    private void showLog(String message, String... addictional){
+    protected void showLog(String message, String... addictional){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        debugLog(message, addictional);
+    }
+
+    protected void debugLog(String message, String[] addictional) {
         Log.d(TAG, message +" - "+ Arrays.toString(addictional));
     }
 

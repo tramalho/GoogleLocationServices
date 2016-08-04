@@ -4,6 +4,10 @@ package br.com.tramalho.googlelocationservices;
  * Created by trama on 03/08/16.
  */
 public interface Const {
-    String INTENT_ACTIVITIES_ID = Const.class.getPackage().getName();
-    String PROBABLE_ACTIVIES_ID = "PROBABLE_ACTIVIES_ID";
+
+    String PACKAGE = Const.class.getPackage().getName();
+
+    String BROADCAST_ACTION = PACKAGE.concat(".ACTIVITIES_BROADCAST");
+    String PROBABLE_ACTIVIES_EXTRA = BROADCAST_ACTION.concat("PROBABLE_ACTIVIES_EXTRA");
+
 }

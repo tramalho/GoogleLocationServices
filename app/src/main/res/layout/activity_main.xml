@@ -31,4 +31,11 @@
         android:text="@string/recognition"
         android:onClick="clickButton"/>
 
+    <Button
+        android:id="@+id/button_geofence"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/geofence"
+        android:onClick="clickButton"/>
+
 </LinearLayout>

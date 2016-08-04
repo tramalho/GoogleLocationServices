@@ -23,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
         else if(view.getId() == R.id.button_recognition){
             targetActivity = RecognitionActivity.class;
         }
+        else if(view.getId() == R.id.button_geofence){
+            targetActivity = GeofenceActivity.class;
+        }
 
         startActivity(new Intent(this, targetActivity));
     }

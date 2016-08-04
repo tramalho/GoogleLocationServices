@@ -33,7 +33,7 @@ public class GeofenceTransitionIntentService extends IntentService {
             String errorString = GeofenceErrorMessages
                     .getErrorString(getApplicationContext(), geofencingEvent.getErrorCode());
 
-            Log.e(TAG, "onHandleIntent: "+errorString);
+            Log.e(TAG, "onHandleIntent [error]: "+errorString);
         } else {
 
             int geofenceTransition = geofencingEvent.getGeofenceTransition();
@@ -43,18 +43,26 @@ public class GeofenceTransitionIntentService extends IntentService {
 
                 List<Geofence> triggeringGeofences = geofencingEvent.getTriggeringGeofences();
 
-                String ids = concatGeofenceIds(triggeringGeofences);
+                String ids = concatGeofenceIds(triggeringGeofences, geofenceTransition);
 
+                Log.d(TAG, "onHandleIntent [ids]: "+ids);
             }
         }
     }
 
-    private String concatGeofenceIds(List<Geofence> triggeringGeofences) {
+    private String concatGeofenceIds(List<Geofence> triggeringGeofences, int geofenceTransition) {
 
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder(""+geofenceTransition);
+        builder.append(":");
 
-        for (Geofence triggeringGeofence : triggeringGeofences) {
-            builder.append(triggeringGeofence.getRequestId());
+        int size = triggeringGeofences.size();
+
+        for (int i = 0; i < size; i++) {
+            builder.append(triggeringGeofences.get(i).getRequestId());
+
+            if(i <  (size - 1)){
+                builder.append(",");
+            }
         }
 
         return builder.toString();

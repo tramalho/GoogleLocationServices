@@ -24,4 +24,11 @@
         android:text="@string/unique_location"
         android:onClick="clickButton"/>
 
+    <Button
+        android:id="@+id/button_recognition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/recognition"
+        android:onClick="clickButton"/>
+
 </LinearLayout>

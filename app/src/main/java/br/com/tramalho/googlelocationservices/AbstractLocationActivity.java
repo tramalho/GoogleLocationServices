@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.Api;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
@@ -41,7 +42,7 @@ public abstract class AbstractLocationActivity extends AppCompatActivity
         GoogleApiClient.Builder builder = new GoogleApiClient.Builder(this);
 
         mGoogleApiClient = builder
-                .addApi(LocationServices.API)
+                .addApi(getAPI())
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
@@ -60,5 +61,9 @@ public abstract class AbstractLocationActivity extends AppCompatActivity
     private void showLog(String message, String... addictional){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         Log.d(TAG, message +" - "+ Arrays.toString(addictional));
+    }
+
+    protected Api<? extends Api.ApiOptions.NotRequiredOptions> getAPI() {
+        return LocationServices.API;
     }
 }

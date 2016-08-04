@@ -1,30 +1,20 @@
 package br.com.tramalho.googlelocationservices;
 
 import android.location.Location;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import java.util.Arrays;
 
-public class LocationChangesActivity extends AppCompatActivity implements
-        GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener, LocationListener {
+public class LocationChangesActivity extends AbstractLocationActivity implements LocationListener {
 
-    private final String TAG = this.getClass().getSimpleName();
-
-
-    private GoogleApiClient googleApiClient;
     private TextView txtOutput;
     private LocationRequest locationRequest;
 
@@ -36,31 +26,9 @@ public class LocationChangesActivity extends AppCompatActivity implements
         createGoogleAPIClient();
     }
 
-    private void loadUI() {
+    protected void loadUI() {
         setTitle(R.string.location_changes);
         txtOutput = (TextView) findViewById(R.id.txt_output_location_changes);
-    }
-
-    private void createGoogleAPIClient() {
-        GoogleApiClient.Builder builder = new GoogleApiClient.Builder(this);
-
-        googleApiClient = builder
-                .addApi(LocationServices.API)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .build();
-    }
-
-    @Override
-    protected void onStart() {
-        googleApiClient.connect();
-        super.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-        googleApiClient.disconnect();
-        super.onStop();
     }
 
     @Override
@@ -72,17 +40,7 @@ public class LocationChangesActivity extends AppCompatActivity implements
             locationRequest.setInterval(1000);
 
         LocationServices.FusedLocationApi
-                .requestLocationUpdates(googleApiClient, locationRequest, this);
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        showLog("onConnectionSuspended", "status: "+i);
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        showLog("onConnectionFailed", connectionResult.getErrorMessage());
+                .requestLocationUpdates(mGoogleApiClient, locationRequest, this);
     }
 
     @Override
